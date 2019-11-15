@@ -16,6 +16,13 @@ require_once './controller.php';
 
 load_config();
 
+if (isset($config['prefer_https'])&&$config['prefer_https']) {
+    $Secured = (isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']);
+    if (!$Secured) {
+        header('Location: https://'.$_SERVER['SERVER_NAME'].'/?'.$_SERVER['QUERY_STRING']);
+    }
+}
+
 $imapClient = new ImapClient($config['imap']['url'], $config['imap']['username'], $config['imap']['password']);
 
 if (DisplayEmailsController::matches()) {
