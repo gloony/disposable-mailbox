@@ -46,7 +46,7 @@ class AutoLinkExtension {
                 if (false === strpos($href, 'http')) {
                     $href = 'http://' . $href;
                 }
-                return '<a href="' . $href . '" rel="noreferrer">' . $url . '</a>';
+                return '<a href="' . $href . '" rel="noreferrer" href="_BLANK">' . $url . '</a>';
             },
             $string
         );
