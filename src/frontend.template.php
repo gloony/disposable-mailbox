@@ -80,7 +80,6 @@ function printMessageBody($email, $purifier) {
     <link rel="stylesheet" href="assets/custom.css">
 
     <script>
-        var mailCount = <?php echo count($emails)?>;
         setInterval(function () {
             var r = new XMLHttpRequest();
             r.open("GET", "?action=has_new_messages&address=<?php echo $user->address?>&email_ids=<?php echo $mailIdsJoinedString?>", true);
@@ -90,8 +89,8 @@ function printMessageBody($email, $purifier) {
                     console.log("There are", r.responseText, "new mails.");
                     document.getElementById("new-content-avalable").style.display = 'block';
 
-                    // If there are no emails displayed, we can reload the page without losing any state.
-                    if (mailCount === 0) {
+                    // Avoid to refresh if a mail is displayed.
+                    if (isAllCollapsed()) {
                         location.reload();
                     }
                 }
@@ -100,6 +99,10 @@ function printMessageBody($email, $purifier) {
 
         }, 15000);
 
+        function isAllCollapsed(){
+            var el = document.getElementsByClassName('show');
+            return (el.length === 0);
+        }
     </script>
 
 </head>
