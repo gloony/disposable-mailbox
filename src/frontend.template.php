@@ -80,6 +80,7 @@ function printMessageBody($email, $purifier) {
     <link rel="stylesheet" href="assets/custom.css">
 
     <script>
+        var mailCount = <?php echo count($emails)?>;
         setInterval(function () {
             var r = new XMLHttpRequest();
             r.open("GET", "?action=has_new_messages&address=<?php echo $user->address?>&email_ids=<?php echo $mailIdsJoinedString?>", true);
@@ -90,7 +91,7 @@ function printMessageBody($email, $purifier) {
                     document.getElementById("new-content-avalable").style.display = 'block';
 
                     // Avoid to refresh if a mail is displayed.
-                    if (isAllCollapsed()) {
+                    if (mailCount === 0 || isAllCollapsed()) {
                         location.reload();
                     }
                 }
