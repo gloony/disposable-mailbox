@@ -85,27 +85,13 @@
                     $content = nl2br($content);
                 }
 
-                $body = imap_body($mbox, $i, FT_PEEK);
-                $body = quoted_printable_decode($body);
-                $body = html_entity_decode($body);
-                $pos = strpos($body, '</div>');
-                if(substr($body, $pos, strlen('</div><div>'))!='</div><div>'&&substr($body, $pos, strlen('</div><div><br'))=='</div><div><br') $body = substr($body, 0, $pos)."\n".substr($body, $pos);
-                $body = str_replace('<div><br></div>', "\n", $body);
-                $body = str_replace('<br', "\n<br", $body);
-                $body = str_replace('<div>', "\n<div>", $body);
-                $body = str_replace('</p>', "</p>\n", $body);
-                $body = str_replace("\r\n", "\n", $body);
-                $body = strip_tags($body);
-                while(substr($body, strlen($body) - strlen("\n"))=="\n") $body = substr($body, 0, strlen($body) - strlen("\n"));
-                while(substr($body, 0, strlen("\n"))=="\n") $body = substr($body, strlen("\n"));
-
                 echo "\t\t\t".'<item>'."\n";
                 echo "\t\t\t\t".'<title>['.htmlspecialchars($from_mail).'] '.htmlspecialchars($title).'</title>'."\n";
                 echo "\t\t\t\t".'<guid isPermaLink="false">'.htmlspecialchars($guid).'</guid>'."\n";
                 echo "\t\t\t\t".'<pubDate>'.$date.'</pubDate>'."\n";
                 echo "\t\t\t\t".'<description>'."\n";
                 echo '<![CDATA['."\n";
-                echo $body."\n";
+                echo $content."\n";
                 echo ']]>'."\n";
                 echo "\t\t\t\t".'</description>'."\n";
                 echo "\t\t\t</item>\n";
